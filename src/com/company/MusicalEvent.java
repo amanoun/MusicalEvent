@@ -6,6 +6,9 @@ import java.util.Scanner;
 
 
 public class MusicalEvent {
+
+    private static final int MAX_PERFORMERS = 5;
+
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
@@ -15,31 +18,30 @@ public class MusicalEvent {
 
         int terminalInputOption = 0;
         int registrationId;
-        int maxNumberOfPerformers = 3;
         displayEntranceOptions();
 
         while (scanner.hasNextLine()) {
-//            Scanner scanner2 = new Scanner(System.in);
+//            Scanner UserInputScanner = new Scanner(System.in);
 
             // scanner.nextLine()--->  This method returns the rest of the current line, excluding any line separator at the end.
             // The position is set to the beginning of the next line.
-            Scanner scanner2 = new Scanner(scanner.nextLine());
+            Scanner UserInputScanner = new Scanner(scanner.nextLine());
             List<String> namesAndSkills = new ArrayList<>();
-            while (scanner2.hasNext()) {
+            while (UserInputScanner.hasNext()) {
 
 //                This method returns true if and only if this scanner's next token is a valid int value
-                if (scanner2.hasNextInt()) {
+                if (UserInputScanner.hasNextInt()) {
 
                     //without line below app wasn't giving the input options
-                    terminalInputOption = scanner2.nextInt();
+                    terminalInputOption = UserInputScanner.nextInt();
                 }
-                if (terminalInputOption == 1 && maxNumberOfPerformers == performers.size()) {
+                if (terminalInputOption == 1 && MAX_PERFORMERS == performers.size()) {
                     System.out.println("We're booked for today, please try later. Thank you for stopping by");
                     System.out.println("Please Enter another valid choice from below:");
-                    printingUserInputOptionsAgain();
+                    printMenu();
 
                 }
-                if (terminalInputOption == 1 && !(performers.size() == maxNumberOfPerformers)) {
+                if (terminalInputOption == 1 && !(performers.size() == MAX_PERFORMERS)) {
                     boolean duplicatePerformer = false;
                     System.out.println("Registration process... ");
                     System.out.println("Please enter name and what you'll be performing separated by ',' a comma");
@@ -71,7 +73,7 @@ public class MusicalEvent {
                         System.out.println("Registration successful, here is your RegistrationId --> " + registrationId);
                     }
                     System.out.println("Please Enter another valid choice from below:");
-                    printingUserInputOptionsAgain();
+                    printMenu();
                     break;
                 }
                 if (terminalInputOption == 2) {
@@ -79,19 +81,19 @@ public class MusicalEvent {
                     if(performers.isEmpty()) {
                         System.out.println("No performances has been registered yet");
                         System.out.println("Please Enter another valid choice from below:");
-                        printingUserInputOptionsAgain();
+                        printMenu();
                         break;
                     }
                     System.out.println("Today's performances");
 
                     for (Performer performer : performers) {
-                        System.out.print("RegId--> " + performer.getRegistrationId() + ", ");
-                        System.out.print("Performer Name--> " + performer.getName() + ", ");
-                        System.out.print("skill--> " + performer.getPerformanceType() + ", ");
-                        System.out.println("Status--> " /* + "figure how to do this maybe a random list of strings" */);
+                        System.out.print("RegId: " + performer.getRegistrationId() + ", ");
+                        System.out.print("Performer Name: " + performer.getName() + ", ");
+                        System.out.print("skill: " + performer.getPerformanceType() + ", ");
+                        System.out.println("Status:" /* + "figure how to do this maybe a random list of strings" */);
                     }
                     System.out.println("Enter another valid choice from below:");
-                    printingUserInputOptionsAgain();
+                    printMenu();
                 }
                 if (terminalInputOption == 3) {
                     System.out.println("Cancellation process");
@@ -102,7 +104,7 @@ public class MusicalEvent {
 
                     System.out.println("Your registration has been cancelled! Thanks for stopping by");
                     System.out.println("Please Enter another valid choice from below:");
-                    printingUserInputOptionsAgain();
+                    printMenu();
                 }
                 break;
             }
@@ -111,11 +113,11 @@ public class MusicalEvent {
 
 
     private static void displayEntranceOptions() {
-        System.out.println("Welcome to the Musical Chairs Event");
-        printingUserInputOptionsAgain();
+        System.out.println("Welcome to the Musical Event");
+        printMenu();
     }
 
-    private static void printingUserInputOptionsAgain() {
+    private static void printMenu() {
         System.out.println("1. Registration");
         System.out.println("2. Start Event ");
         System.out.println("3. Cancel Registration");
